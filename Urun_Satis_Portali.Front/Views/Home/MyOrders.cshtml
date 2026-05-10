@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<div class="container py-5">
+    <div class="d-flex align-items-center justify-content-between mb-5 fade-in">
+        <h2 class="fw-800 mb-0">Sipariş <span class="text-primary-gradient">Gerişmişim</span></h2>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">Alışverişe Devam Et</a>
+    </div>
+
+    <div class="order-history-list fade-in" style="animation-delay: 0.2s" id="myOrdersContainer">
+        <!-- Loading Skeleton -->
+        <div class="glass-card p-4 rounded-4 border mb-3 placeholder-glow">
+            <div class="placeholder col-12 rounded-4" style="height: 100px;"></div>
+        </div>
+        <div class="glass-card p-4 rounded-4 border mb-3 placeholder-glow">
+            <div class="placeholder col-12 rounded-4" style="height: 100px;"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            fetchMyOrders();
+        });
+    </script>
+}
+
+<style>
+    .order-card { background: white; transition: all 0.3s ease; border-radius: 25px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
+    .order-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border-color: rgba(67, 97, 238, 0.3); }
+    .avatar-stack { display: flex; align-items: center; margin-right: 1rem; }
+    .avatar-stack-item { width: 45px; height: 45px; border-radius: 50%; border: 3px solid white; background: #f8f9fa; margin-left: -15px; position: relative; object-fit: cover; }
+    .avatar-stack-item:first-child { margin-left: 0; }
+    .order-status-badge { background: #e6fffa; color: #0694a2; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 1rem; border-radius: 9999px; }
+    .bg-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); }
+    .text-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+</style>

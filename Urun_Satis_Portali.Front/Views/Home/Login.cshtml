@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container py-5 d-flex align-items-center justify-content-center" style="min-height: 80vh">
+    <div class="login-card p-5 fade-in bg-white rounded-5 shadow-2xl border" style="width: 100%; max-width: 450px;">
+        <div class="text-center mb-5">
+            <h2 class="fw-800 display-6 mb-2">Tekrar <span class="text-primary-gradient">Hoş Geldiniz</span></h2>
+            <p class="text-muted">Portala erişmek için bilgilerinizi girin</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-4 border px-4 shadow-none" id="userName" placeholder="Kullanıcı Adı" required>
+                <label for="userName" class="px-4 text-muted">Kullanıcı Adı</label>
+            </div>
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control rounded-4 border px-4 shadow-none" id="password" placeholder="Şifre" required>
+                <label for="password" class="px-4 text-muted">Şifre</label>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mb-4 ps-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label text-muted small" for="rememberMe">
+                        Beni Hatırla
+                    </label>
+                </div>
+                <a href="#" class="text-primary small fw-bold text-decoration-none">Şifremi Unuttum?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-3 rounded-4 fw-bold fs-5 shadow-lg mb-4">
+                Giriş Yap <i class="fa-solid fa-arrow-right-to-bracket ms-2"></i>
+            </button>
+        </form>
+
+        <div class="text-center">
+            <p class="text-muted small">Hesabınız yok mu? <a asp-action="Register" class="text-primary fw-bold text-decoration-none">Buradan Kayıt Olun</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(e) {
+                e.preventDefault();
+                
+                const loginData = {
+                    userName: $('#userName').val(),
+                    password: $('#password').val()
+                };
+
+                Swal.fire({
+                    title: 'Logging In...',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); }
+                });
+
+                $.ajax({
+                    url: `${window.API_BASE_URL}/Account/login`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(loginData),
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: `Welcome, ${response.userName}!`,
+                            text: 'Login successful. Redirecting...',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                  
+                        // Improved role check
+                        let roles = [];
+                        try {
+                            const payload = JSON.parse(atob(response.token.split('.')[1]));
+                            // Check both URI and short key for roles
+                            const roleClaim = payload["role"] || payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                            if (Array.isArray(roleClaim)) {
+                                roles = roleClaim;
+                            } else if (roleClaim) {
+                                roles = [roleClaim];
+                            }
+                        } catch (e) {
+                            console.error("Token decode error", e);
+                        }
+
+                        localStorage.setItem('saleshop_token', response.token);
+                        localStorage.setItem('saleshop_user', JSON.stringify(response));
+                        
+                        setTimeout(() => {
+                            if (roles.includes("Admin")) {
+                                window.location.href = '/Home/Admin';
+                            } else {
+                                window.location.href = '/Home/Index';
+                            }
+                        }, 1000);
+                    },
+                    error: function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Login Failed',
+                            text: err.responseJSON || 'Invalid credentials. Please try again.'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,74 @@
+@{
+    Layout = "_Layout";
+}
+
+<div class="d-flex" id="adminWrapper">
+    <!-- Sidebar -->
+    <div class="admin-sidebar bg-white border-end" id="sidebar-wrapper">
+        <div class="sidebar-heading p-4">
+            <h5 class="fw-800 mb-0"><i class="fa-solid fa-user-shield text-primary me-2"></i>Admin <span class="text-primary-gradient">Panel</span></h5>
+        </div>
+        <div class="list-group list-group-flush px-3">
+            <a asp-controller="Home" asp-action="Admin" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "Admin" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-gauge-high me-3"></i>Dashboard
+            </a>
+            <a asp-controller="Home" asp-action="Products" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "Products" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-box me-3"></i>Products
+            </a>
+            <a asp-controller="Home" asp-action="Categories" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "Categories" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-tags me-3"></i>Categories
+            </a>
+            <a asp-controller="Home" asp-action="Coupons" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "Coupons" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-ticket me-3"></i>Coupons
+            </a>
+            <a asp-controller="Home" asp-action="AdminOrders" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "AdminOrders" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-receipt me-3"></i>Orders
+            </a>
+            <a asp-controller="Home" asp-action="Settings" class="list-group-item list-group-item-action py-3 border-0 rounded-3 mb-1 @(ViewContext.RouteData.Values["action"]?.ToString() == "Settings" ? "active shadow-sm" : "")">
+                <i class="fa-solid fa-gear me-3"></i>Settings
+            </a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="flex-grow-1 bg-light/30">
+        <div class="container-fluid py-4 px-lg-5">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+<style>
+    #adminWrapper { overflow-x: hidden; }
+    #sidebar-wrapper {
+        min-height: calc(100vh - 80px);
+        width: 280px;
+        transition: margin .25s ease-out;
+    }
+    .admin-sidebar .list-group-item {
+        color: var(--secondary);
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    .admin-sidebar .list-group-item:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+        color: var(--primary);
+        transform: translateX(5px);
+    }
+    .admin-sidebar .list-group-item.active {
+        background-color: var(--primary);
+        color: white;
+    }
+    .admin-sidebar .list-group-item.active i {
+        color: white;
+    }
+    .admin-sidebar i {
+        width: 20px;
+        text-align: center;
+        opacity: 0.8;
+    }
+</style>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

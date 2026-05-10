@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Order Summary -->
+        <div class="col-lg-7 fade-in">
+            <div class="glass-card p-4 p-md-5 rounded-5 border shadow-2xl h-100">
+                <div class="d-flex align-items-center mb-5">
+                    <div class="avatar bg-primary-gradient text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <h2 class="fw-800 mb-0">Sipariş <span class="text-primary-gradient">Özeti</span></h2>
+                </div>
+
+                <div id="checkoutItems" class="mb-5">
+                    <!-- Items will be injected here -->
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control rounded-4 border px-4 shadow-none" id="orderNote" placeholder="Sipariş Notu" style="height: 100px"></textarea>
+                    <label for="orderNote" class="px-4 text-muted">Sipariş Notu (Opsiyonel)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment & Completion -->
+        <div class="col-lg-5 fade-in" style="animation-delay: 0.2s">
+            <div class="glass-card p-4 p-md-5 rounded-5 border bg-light shadow-lg sticky-top" style="top: 100px;">
+                <h4 class="fw-bold mb-4">Ödeme Detayları</h4>
+                
+                <div class="input-group mb-2">
+                    <span class="input-group-text bg-white border-end-0 rounded-start-4"><i class="fa-solid fa-tag text-muted"></i></span>
+                    <input type="text" class="form-control border-x-0 shadow-none py-3" id="orderCoupon" placeholder="Kupon Kodu">
+                    <button class="btn btn-outline-primary border-start-0 rounded-end-4 px-3" onclick="applyCoupon()">Uygula</button>
+                </div>
+                <div id="couponMsg" class="small mb-4 d-none"></div>
+
+                <div class="divider mb-4"></div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-secondary">Ara Toplam</span>
+                    <span class="fw-bold" id="checkoutSubtotal">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-secondary">Kargo</span>
+                    <span class="text-success fw-bold">ÜCRETSİZ</span>
+                </div>
+                <div id="couponRow" class="d-flex justify-content-between mb-2 d-none">
+                    <span class="text-secondary">İndirim</span>
+                    <span class="text-danger fw-bold" id="checkoutDiscount">-$0.00</span>
+                </div>
+
+                <div class="divider my-4"></div>
+
+                <div class="d-flex justify-content-between mb-5 align-items-center">
+                    <span class="h4 mb-0 fw-bold">Toplam</span>
+                    <span class="h2 mb-0 fw-bold text-primary" id="checkoutTotal">$0.00</span>
+                </div>
+
+                <button class="btn btn-primary-gradient w-100 py-3 rounded-pill fw-bold shadow-lg mb-3" onclick="placeOrder()">
+                    Alışverişi Tamamla <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                </button>
+                <div class="text-center">
+                    <p class="text-muted small mb-0"><i class="fa-solid fa-lock me-1"></i> Güvenli 256-bit SSL şifreli ödeme</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            renderCheckoutSummary();
+        });
+    </script>
+}
+
+<style>
+    .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+    .divider { height: 1px; background: #e2e8f0; width: 100%; }
+    .avatar { box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3); }
+    .btn-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); color: white; border: none; transition: all 0.3s ease; }
+    .btn-primary-gradient:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4); opacity: 0.9; color: white; }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
+</style>

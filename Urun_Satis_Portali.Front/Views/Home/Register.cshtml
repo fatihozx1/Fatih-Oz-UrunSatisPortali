@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Join Us";
+}
+
+<div class="auth-wrapper d-flex align-items-center justify-content-center">
+    <div class="auth-card glass-card p-4 p-md-5 fade-in">
+        <div class="text-center mb-4">
+            <div class="logo-icon bg-primary-gradient text-white mb-3">
+                <i class="fa-solid fa-user-plus fa-2x"></i>
+            </div>
+            <h2 class="fw-800"><span class="text-primary-gradient">Hesap</span> Oluştur</h2>
+            <p class="text-muted">Topluluğumuza bugün katılın</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control rounded-4 border-0 px-4 shadow-sm" id="regFullName" placeholder="Ad Soyad">
+                    <label for="regFullName" class="px-4 text-muted">Ad Soyad</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control rounded-4 border-0 px-4 shadow-sm" id="regUserName" placeholder="Kullanıcı Adı">
+                    <label for="regUserName" class="px-4 text-muted">Kullanıcı Adı</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-2">
+                    <input type="email" class="form-control rounded-4 border-0 px-4 shadow-sm" id="regEmail" placeholder="isim@ornek.com">
+                    <label for="regEmail" class="px-4 text-muted">E-posta adresi</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control rounded-4 border-0 px-4 shadow-sm" id="regPassword" placeholder="Şifre">
+                    <label for="regPassword" class="px-4 text-muted">Şifre</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control rounded-4 border-0 px-4 shadow-sm" id="regConfirmPassword" placeholder="Şifre Tekrar">
+                    <label for="regConfirmPassword" class="px-4 text-muted">Şifre Tekrar</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary-gradient w-100 py-3 rounded-4 fw-bold shadow-lg mb-4" onclick="register()">
+            Hemen Kayıt Ol
+        </button>
+
+        <div class="text-center">
+            <p class="text-muted mb-0">Zaten bir hesabınız var mı? <a asp-action="Login" class="text-primary fw-bold text-decoration-none">Buradan Giriş Yapın</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js" asp-append-version="true"></script>
+}
+
+<style>
+    .auth-wrapper { min-height: 80vh; padding: 2rem 0; }
+    .auth-card { width: 100%; max-width: 550px; }
+    .logo-icon { width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3); }
+    .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 30px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1); }
+    .bg-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); }
+    .text-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); color: white; border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .btn-primary-gradient:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4); opacity: 0.9; color: white; }
+    .form-control:focus { box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15) !important; background-color: white !important; }
+</style>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DigiShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Urun_Satis_Portali.Front.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg glass-nav py-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-3" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="text-primary-gradient">Sale</span>Shop
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link fw-medium" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item mx-2" id="navOrders" style="display:none;">
+                            <a class="nav-link fw-medium" asp-area="" asp-controller="Home" asp-action="MyOrders">Siparişlerim</a>
+                        </li>
+                        <li class="nav-item mx-2" id="navAdmin" style="display:none;">
+                            <a class="nav-link fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Admin">
+                                <i class="fa-solid fa-gauge-high me-1"></i> Yönetici Paneli
+                            </a>
+                        </li>
+                        <li class="nav-item mx-2" id="navLogin">
+                            <a class="btn btn-outline-primary rounded-pill px-4" asp-area="" asp-controller="Home" asp-action="Login">Giriş Yap</a>
+                        </li>
+                        <li class="nav-item mx-2" id="navUser" style="display:none;">
+                            <div class="dropdown">
+                                <button class="btn btn-light rounded-pill px-3 dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-circle-user me-1 text-primary"></i> <span id="userNameDisplay">User</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-3 mt-2">
+                                    <li><a class="dropdown-item py-2" asp-controller="Home" asp-action="MyOrders"><i class="fa-solid fa-bag-shopping me-2 text-primary"></i> Siparişlerim</a></li>
+                                    <li><hr class="dropdown-divider opacity-50"></li>
+                                    <li><a class="dropdown-item py-2" href="javascript:void(0)" onclick="logout()"><i class="fa-solid fa-right-from-bracket me-2 text-danger"></i> Çıkış Yap</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <button id="cartBtn" class="btn btn-cart position-relative shadow-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
+                                <i class="fa-solid fa-cart-shopping fs-5"></i>
+                                <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-2 border-white d-none">
+                                    0
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid px-0 main-wrapper flex-grow-1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Offcanvas Cart -->
+    <div class="offcanvas offcanvas-end glass-sidebar" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold" id="cartSidebarLabel">Alışveriş Sepetiniz</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="cartItems">
+            <div class="text-center py-5 empty-cart-msg">
+                <i class="fa-solid fa-basket-shopping fs-1 text-muted mb-3 d-block opacity-25"></i>
+                <p class="text-muted">Sepetiniz boş.</p>
+                <a href="#" class="btn btn-primary rounded-pill mt-2" data-bs-dismiss="offcanvas">Alışverişe Başla</a>
+            </div>
+            <!-- Cart items will be injected here -->
+        </div>
+        <div class="offcanvas-footer p-4 border-top bg-light/50 backdrop-blur d-none" id="cartFooter">
+            <div class="d-flex justify-content-between mb-4">
+                <span class="fs-5 fw-bold">Toplam:</span>
+                <span class="fs-5 fw-bold text-primary" id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary w-100 py-3 rounded-4 fw-bold fs-5 shadow-lg" onclick="checkout()">
+                Ödeme Yap
+            </button>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        window.API_BASE_URL = "https://localhost:7298/api";
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

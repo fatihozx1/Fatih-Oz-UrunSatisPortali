@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Yeni Profil",
+    "Projects": [
+      {
+        "Path": "Urun_Satis_Portali.Front\\Urun_Satis_Portali.Front.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "Urun_Satis_Potali.API\\Urun_Satis_Potali.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

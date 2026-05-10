@@ -1,0 +1,120 @@
+@{
+    ViewData["Title"] = "Product Details";
+    var productId = ViewBag.ProductId;
+}
+
+<input type="hidden" id="currentProductId" value="@productId" />
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav class="mb-5 fade-in" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Ana Sayfa</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted" id="breadcrumbCategory">Kategori</a></li>
+            <li class="breadcrumb-item active fw-bold text-primary" aria-current="page" id="breadcrumbProduct">Ürün Adı</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5 mb-5 pb-5">
+        <!-- Product Images -->
+        <div class="col-lg-7 fade-in">
+            <div class="product-gallery glass-card p-2 rounded-5 overflow-hidden shadow-2xl">
+                <div class="main-image-container bg-light rounded-5 p-5 d-flex align-items-center justify-content-center" style="min-height: 600px;">
+                    <img id="detailImage" src="" class="img-fluid rounded-4 transition-all" alt="Product" onerror="this.src='https://placehold.co/800x600?text=Premium+Experience'">
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-5 fade-in" style="animation-delay: 0.2s">
+            <div class="ps-lg-4 h-100 d-flex flex-column">
+                <div class="mb-4">
+                    <span id="detailBadge" class="badge bg-primary-soft text-primary px-3 py-2 rounded-pill mb-3 fw-bold fs-6">Category</span>
+                    <h1 id="detailTitle" class="display-4 fw-800 mb-3 lh-tight">Loading Product...</h1>
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div id="detailPrice" class="fs-2 fw-bold text-primary">$0.00</div>
+                        <span id="detailOldPrice" class="text-muted text-decoration-line-through fs-5">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h6 class="text-uppercase fw-bold text-muted small mb-3 tracking-widest">Açıklama</h6>
+                    <p id="detailDescription" class="text-secondary fs-5 lh-relaxed">
+                        Açıklama yükleniyor...
+                    </p>
+                </div>
+
+                <div class="mb-5">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="text-uppercase fw-bold text-muted small mb-0 tracking-widest">Adet</h6>
+                        <span class="text-success small fw-bold" id="detailStock">Stokta Var</span>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="qty-control shadow-sm border px-4 py-2 rounded-pill">
+                            <button class="btn btn-link text-decoration-none text-dark p-0" onclick="updateDetailQty(-1)"><i class="fa-solid fa-minus"></i></button>
+                            <span id="detailQty" class="px-4 fw-bold fs-5">1</span>
+                            <button class="btn btn-link text-decoration-none text-dark p-0" onclick="updateDetailQty(1)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <button class="btn btn-primary-gradient flex-grow-1 py-3 rounded-pill fw-bold shadow-lg" onclick="addToCartFromDetail()">
+                            <i class="fa-solid fa-cart-plus me-2"></i> Sepete Ekle
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="mt-auto row g-3 text-center d-none d-md-flex">
+                    <div class="col-4">
+                        <div class="p-3 border rounded-4">
+                            <i class="fa-solid fa-truck-fast text-primary mb-2"></i>
+                            <div class="small fw-bold">Hızlı Teslimat</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 border rounded-4">
+                            <i class="fa-solid fa-shield-halved text-primary mb-2"></i>
+                            <div class="small fw-bold">Güvenli Ödeme</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 border rounded-4">
+                            <i class="fa-solid fa-rotate-left text-primary mb-2"></i>
+                            <div class="small fw-bold">Kolay İade</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <section class="related-section py-5 border-top">
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <h3 class="fw-800 mb-0">Bunları da <span class="text-primary">Beğenebilirsiniz</span></h3>
+            <a asp-action="Index" class="btn btn-link text-decoration-none text-primary fw-bold p-0">Tümünü Gör</a>
+        </div>
+        <div id="relatedContainer" class="row g-4">
+            <!-- Loading skeleton -->
+            <div class="col-3"><div class="placeholder-glow"><div class="placeholder rounded-4 w-100" style="height: 300px;"></div></div></div>
+            <div class="col-3"><div class="placeholder-glow"><div class="placeholder rounded-4 w-100" style="height: 300px;"></div></div></div>
+            <div class="col-3"><div class="placeholder-glow"><div class="placeholder rounded-4 w-100" style="height: 300px;"></div></div></div>
+            <div class="col-3"><div class="placeholder-glow"><div class="placeholder rounded-4 w-100" style="height: 300px;"></div></div></div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js" asp-append-version="true"></script>
+}
+
+<style>
+    .tracking-widest { letter-spacing: 0.1em; }
+    .bg-primary-soft { background: rgba(67, 97, 238, 0.1); }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+    .main-image-container img { transform: scale(1); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .main-image-container:hover img { transform: scale(1.05); }
+    .qty-control { display: flex; align-items: center; background: white; }
+    .btn-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); color: white; border: none; }
+    .btn-primary-gradient:hover { box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3); opacity: 0.9; color: white; }
+    .breadcrumb-item + .breadcrumb-item::before { content: "→"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 0.7rem; color: #cbd5e0; margin: 0 10px; }
+    .transition-all { transition: all 0.3s ease; }
+</style>

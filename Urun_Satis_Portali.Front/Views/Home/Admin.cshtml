@@ -1,0 +1,116 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Yönetici Paneli";
+}
+
+<div id="adminContainer" style="display:none;">
+    <div class="row mb-5 fade-in">
+        <div class="col-12 d-flex align-items-center justify-content-between mb-2">
+            <div>
+                <h1 class="display-5 fw-800 mb-0">Panel <span class="text-primary-gradient">İstatistikleri</span></h1>
+                <p class="text-muted fs-5">Portal performansınızın genel bakışı</p>
+            </div>
+            <button class="btn btn-white border rounded-pill shadow-sm px-4" onclick="fetchDashboardStats()">
+                <i class="fa-solid fa-arrows-rotate me-1"></i> Yenile
+            </button>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="icon-shape bg-primary-soft text-primary rounded-3 p-3">
+                            <i class="fa-solid fa-dollar-sign fs-4"></i>
+                        </div>
+                        <span class="badge bg-success-soft text-success rounded-pill px-3">+12.5%</span>
+                    </div>
+                    <h6 class="text-muted fw-semi-bold mb-1">Toplam Gelir</h6>
+                    <h3 class="fw-800 mb-0" id="statRevenue">$0.00</h3>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="icon-shape bg-info-soft text-info rounded-3 p-3">
+                            <i class="fa-solid fa-cart-shopping fs-4"></i>
+                        </div>
+                        <span class="badge bg-info-soft text-info rounded-pill px-3">+5.2%</span>
+                    </div>
+                    <h6 class="text-muted fw-semi-bold mb-1">Toplam Sipariş</h6>
+                    <h3 class="fw-800 mb-0" id="statOrders">0</h3>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="icon-shape bg-success-soft text-success rounded-3 p-3">
+                            <i class="fa-solid fa-users fs-4"></i>
+                        </div>
+                        <span class="badge bg-success-soft text-success rounded-pill px-3">+8%</span>
+                    </div>
+                    <h6 class="text-muted fw-semi-bold mb-1">Toplam Kullanıcı</h6>
+                    <h3 class="fw-800 mb-0" id="statUsers">0</h3>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="icon-shape bg-warning-soft text-warning rounded-3 p-3">
+                            <i class="fa-solid fa-box fs-4"></i>
+                        </div>
+                        <span class="badge bg-warning-soft text-warning rounded-pill px-3">Aktif</span>
+                    </div>
+                    <h6 class="text-muted fw-semi-bold mb-1">Toplam Ürün</h6>
+                    <h3 class="fw-800 mb-0" id="statProducts">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 fade-in pe-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+                <div class="card-header bg-white border-0 p-4 d-flex align-items-center justify-content-between">
+                    <h5 class="fw-800 mb-0">Son <span class="text-primary">Siparişler</span></h5>
+                    <a asp-action="AdminOrders" class="btn btn-link text-decoration-none text-primary fw-bold p-0">Tümünü Gör</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 custom-table">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Sipariş No</th>
+                                <th>Müşteri</th>
+                                <th>Tarih</th>
+                                <th>Tutar</th>
+                                <th class="text-center pe-4">Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersBody">
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                                    <p class="mt-2 text-muted small">Siparişler yükleniyor...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_AdminModals")
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+}
+
+<style>
+    .icon-shape { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+    .bg-primary-soft { background: rgba(67, 97, 238, 0.1); }
+    .bg-info-soft { background: rgba(76, 201, 240, 0.1); }
+    .bg-success-soft { background: rgba(56, 176, 0, 0.1); }
+    .bg-warning-soft { background: rgba(255, 193, 7, 0.1); }
+    .bg-danger-soft { background: rgba(247, 37, 133, 0.1); }
+    .custom-table thead th { font-size: 0.8rem; text-transform: uppercase; color: var(--secondary); padding: 1rem; border: none; }
+    .btn-white { background: white; border: 1px solid #e2e8f0; }
+</style>

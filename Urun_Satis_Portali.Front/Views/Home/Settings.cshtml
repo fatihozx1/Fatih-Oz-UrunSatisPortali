@@ -1,0 +1,81 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Site Ayarları";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-4 fade-in">
+    <div>
+        <h3 class="fw-800 mb-0">Site <span class="text-primary-gradient">Ayarları</span></h3>
+        <p class="text-muted small mb-0">Portal görünümünü ve davranışını özelleştirin</p>
+    </div>
+</div>
+
+<div class="row g-4 fade-in" style="animation-delay: 0.1s">
+    <div class="col-lg-7">
+        <div class="card border-0 rounded-4 shadow-sm h-100">
+            <div class="card-body p-4 p-md-5">
+                <h5 class="fw-bold mb-4">Ana Sayfa Yapılandırması</h5>
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-muted small text-uppercase mb-2">Hero Görsel URL'si</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white border-end-0 rounded-start-4"><i class="fa-solid fa-image text-muted"></i></span>
+                        <input type="text" class="form-control border-start-0 shadow-none py-3" id="heroImageUrlInput" placeholder="https://example.com/hero.jpg" oninput="updateHeroPreview(this.value)">
+                    </div>
+                    <p class="text-muted small">Bu görsel ana sayfanızdaki büyük başlık bölümünde görünür. Yüksek çözünürlüklü yatay görseller (1920x1080) en iyi sonucu verir.</p>
+                </div>
+
+                <div class="divider my-4"></div>
+
+                <button class="btn btn-primary-gradient px-5 py-3 rounded-pill fw-bold shadow-lg" onclick="saveSiteSettings()">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Değişiklikleri Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card border-0 rounded-4 shadow-sm bg-light overflow-hidden">
+            <div class="card-header bg-white border-0 p-4 pb-0">
+                <h6 class="fw-bold mb-0">Canlı Önizleme</h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="preview-container rounded-4 shadow-sm border overflow-hidden bg-white">
+                    <div class="preview-hero-mockup p-3 pb-0">
+                        <div class="d-flex gap-2 mb-3">
+                            <div class="placeholder border-0 rounded-circle" style="width: 15px; height: 15px; background: #ff5f57;"></div>
+                            <div class="placeholder border-0 rounded-circle" style="width: 15px; height: 15px; background: #ffbd2e;"></div>
+                            <div class="placeholder border-0 rounded-circle" style="width: 15px; height: 15px; background: #27c93f;"></div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="placeholder col-10 mb-2"></div>
+                                <div class="placeholder col-8 mb-4"></div>
+                                <div class="placeholder col-4 py-3 rounded-pill"></div>
+                            </div>
+                            <div class="col-6">
+                                <img id="heroPreviewImg" src="" class="img-fluid rounded-4 shadow-sm" style="height: 120px; width: 100%; object-fit: cover; background: #f1f5f9;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-muted small mt-3">Ana sayfa hero bölümünün görsel temsilidir</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            loadSettings();
+        });
+    </script>
+}
+
+<style>
+    .btn-primary-gradient { background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%); color: white; border: none; }
+    .divider { height: 1px; background: #e2e8f0; width: 100%; }
+    .preview-hero-mockup { background: white; min-height: 200px; }
+</style>

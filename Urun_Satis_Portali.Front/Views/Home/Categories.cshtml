@@ -1,0 +1,86 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kategorileri Yönet";
+}
+
+<div id="adminContainer" style="display:none;">
+    <div class="d-flex align-items-center justify-content-between mb-4 fade-in">
+        <div>
+            <h1 class="display-6 fw-800 mb-0">Kategori <span class="text-info-gradient">Yönetimi</span></h1>
+            <p class="text-muted">Ürünlerinizi kategorilerle düzenleyin</p>
+        </div>
+        <button class="btn btn-info text-white rounded-pill shadow-lg px-4 py-2" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            <i class="fa-solid fa-plus me-1"></i> Kategori Ekle
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 fade-in-up">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 custom-table text-center">
+                    <thead class="bg-light">
+                        <tr>
+                            <th># ID</th>
+                            <th>Kategori Adı</th>
+                            <th>Ürün Sayısı</th>
+                            <th class="pe-4">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoriesTableBody">
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <div class="spinner-border text-info" role="status"></div>
+                                <p class="mt-2 text-muted">Kategoriler yükleniyor...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_AdminModals")
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            fetchCategoriesList();
+        });
+
+        function fetchCategoriesList() {
+            $.get(`${window.API_BASE_URL}/Category`, function(data) {
+                const tbody = $('#categoriesTableBody');
+                tbody.empty();
+                data.forEach(c => {
+                    tbody.append(`
+                        <tr>
+                            <td class="fw-bold text-muted">#CAT-${c.id}</td>
+                            <td><span class="fw-bold text-dark fs-5">${c.name}</span></td>
+                            <td>
+                                <span class="badge bg-info-soft text-info rounded-pill px-3 py-2">
+                                    <i class="fa-solid fa-box-open me-1"></i> Managed
+                                </span>
+                            </td>
+                            <td class="pe-4">
+                                <div class="btn-group shadow-sm rounded-pill overflow-hidden">
+                                    <button class="btn btn-white btn-sm px-3" onclick="editCategory(${c.id})"><i class="fa-solid fa-pen-to-square text-info"></i></button>
+                                    <button class="btn btn-white btn-sm px-3" onclick="deleteCategory(${c.id})"><i class="fa-solid fa-trash text-danger"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+    </script>
+}
+
+<style>
+    .text-info-gradient {
+        background: linear-gradient(135deg, #0dcaf0 0%, #0aa2bd 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>

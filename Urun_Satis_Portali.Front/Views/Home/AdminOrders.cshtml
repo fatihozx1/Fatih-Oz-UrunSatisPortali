@@ -1,0 +1,72 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Order Management";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-4 fade-in">
+    <div>
+        <h3 class="fw-800 mb-0">Order <span class="text-primary-gradient">Management</span></h3>
+        <p class="text-muted small mb-0">Track and manage customer purchases</p>
+    </div>
+    <button class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="fetchAdminOrders()">
+        <i class="fa-solid fa-rotate me-2"></i> Refresh
+    </button>
+</div>
+
+<!-- Orders Table Card -->
+<div class="card border-0 rounded-4 shadow-sm fade-in" style="animation-delay: 0.1s">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3 border-0">Order ID</th>
+                        <th class="py-3 border-0">Customer</th>
+                        <th class="py-3 border-0">Date</th>
+                        <th class="py-3 border-0 text-center">Items</th>
+                        <th class="py-3 border-0">Total</th>
+                        <th class="py-3 border-0 text-center">Status</th>
+                        <th class="pe-4 py-3 border-0 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="adminOrdersBody">
+                    <!-- Orders will be injected here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Loading State -->
+        <div id="tableLoader" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="adminOrderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 shadow-lg">
+            <div class="modal-header border-0 p-4 pb-0">
+                <h5 class="modal-title fw-800" id="adminOrderModalTitle">Order Details</h5>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="adminOrderModalBody">
+                <!-- Content injected via JS -->
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            fetchAdminOrders();
+        });
+    </script>
+}

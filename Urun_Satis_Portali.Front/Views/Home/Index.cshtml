@@ -1,0 +1,80 @@
+<div class="loader-wrapper" id="pageLoader">
+    <div class="loader"></div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section py-5 mb-5 bg-white border-bottom">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-6 fade-in">
+                <span class="badge bg-primary-soft text-primary px-3 py-2 rounded-pill mb-3 fw-bold">YENİ KOLEKSİYON 2026</span>
+                <h1 class="display-3 fw-800 mb-4 lh-tight"><span class="text-primary-gradient">SaleShop</span>'a Hoş Geldiniz</h1>
+                <p class="lead text-secondary mb-5 pe-lg-5">Stil, performans ve dayanıklılık için tasarlanmış seçkin ürün koleksiyonumuzu keşfedin.</p>
+                <div class="d-flex gap-3">
+                    <a href="#products-grid" class="btn btn-primary px-5 py-3 rounded-pill btn-lg shadow-lg">Hemen Alışverişe Başla</a>
+                    <a href="#" class="btn btn-outline-secondary px-5 py-3 rounded-pill btn-lg">Daha Fazla Bilgi</a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block fade-in" style="animation-delay: 0.2s">
+                <div class="position-relative">
+                    <div class="bg-primary-gradient rounded-circle position-absolute top-50 start-50 translate-middle opacity-10" style="width: 500px; height: 500px;"></div>
+                    <img id="heroImage" src="https://placehold.co/800x600?text=Premium+Experience" alt="Hero" class="img-fluid rounded-5 shadow-2xl position-relative z-1">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content Area -->
+<div class="container mb-5 pb-5">
+    <!-- Category Filters -->
+    <div class="mb-5 fade-in" style="animation-delay: 0.3s">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="fw-bold m-0 fs-4">Öne Çıkan Kategoriler</h3>
+            <div class="text-primary fw-600 cursor-pointer" onclick="filterByCategory(0)">Tümünü Gör <i class="fa-solid fa-chevron-right ms-1 small"></i></div>
+        </div>
+        <div id="categoryContainer" class="d-flex flex-wrap">
+            <div class="filter-pill active" onclick="filterByCategory(0, this)">Tüm Ürünler</div>
+            <!-- Categories will be injected here -->
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="products-grid" class="fade-in" style="animation-delay: 0.4s">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="fw-bold m-0 fs-4" id="gridTitle">Son Ürünler</h3>
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle border rounded-pill px-4" type="button" data-bs-toggle="dropdown">
+                    Short by: <span class="fw-bold">Default</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg">
+                    <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                    <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                    <li><a class="dropdown-item" href="#">Newest First</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="productContainer" class="row g-4 italic-animation">
+            <!-- Products will be injected here via AJAX -->
+        </div>
+        
+        <!-- Loading State for Products -->
+        <div id="gridLoader" class="text-center py-5 d-none">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js" asp-append-version="true"></script>
+}
+
+<style>
+    .bg-primary-soft { background-color: rgba(79, 70, 229, 0.1); }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
+    .cursor-pointer { cursor: pointer; }
+    .fw-800 { font-weight: 800; }
+    .fw-600 { font-weight: 600; }
+</style>
